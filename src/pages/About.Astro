@@ -1,36 +1,207 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Request a VibeBox | VibeBox Vending';
 ---
 
-<Layout title="About VibeBox Vending | DC / MD">
-  <main class="page page-about">
-    <h1>About VibeBox Vending</h1>
-    <p>
-      VibeBox Vending is a DC / MD based vending company focused on
-      modern, cashless machines wrapped in a clean black &amp; gold design.
-      We specialize in apartment communities, office buildings, and
-      mixed-use properties that care about aesthetics as much as convenience.
-    </p>
+<Layout title={title}>
+  <main class="page">
+    <section class="card">
+      <p class="eyebrow">Request a VibeBox for your building</p>
+      <h1>Tell us about your property</h1>
+      <p class="intro">
+        Share a few quick details and we’ll follow up with a custom placement plan,
+        recommended product mix, and a go-live timeline.
+      </p>
 
-    <h2>Service area</h2>
-    <ul>
-      <li>Washington, DC</li>
-      <li>Prince George’s County, MD</li>
-      <li>Charles County, MD</li>
-      <li>And nearby surrounding areas</li>
-    </ul>
+      <form
+        class="form"
+        action="https://formspree.io/f/your-form-id"
+        method="POST"
+      >
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required />
+        </div>
 
-    <h2>What we provide</h2>
-    <ul>
-      <li>No-cost placement for qualifying buildings</li>
-      <li>Cashless-only vending (tap, chip, mobile pay)</li>
-      <li>Remote monitoring &amp; restock alerts</li>
-      <li>Curated product mix based on your residents</li>
-    </ul>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+        </div>
 
-    <p>
-      Ready to add a VibeBox to your property?
-      <a href="/#placement-form">Request a placement here.</a>
-    </p>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" />
+        </div>
+
+        <div class="field">
+          <label for="building">Building name</label>
+          <input id="building" name="building" type="text" />
+        </div>
+
+        <div class="field">
+          <label for="type">Building type</label>
+          <select id="type" name="type">
+            <option>Apartments</option>
+            <option>Office</option>
+            <option>Mixed-use</option>
+            <option>Student housing</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="size">Approx. number of residents / employees</label>
+          <input id="size" name="size" type="text" />
+        </div>
+
+        <div class="field full">
+          <label for="notes">Anything else we should know?</label>
+          <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="submit">
+          Submit placement request
+        </button>
+      </form>
+
+      <p class="bottom-note">
+        Prefer email? Reach us directly at
+        <a href="mailto:vibeboxvending@gmail.com">vibeboxvending@gmail.com</a>
+      </p>
+    </section>
   </main>
+
+  <style>
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1.5rem;
+      background: radial-gradient(circle at top, #1a2740 0, #050509 55%, #000 100%);
+      color: #f7f7f7;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 720px;
+      background: radial-gradient(circle at top left, #25253a 0, #111118 45%, #050509 100%);
+      border-radius: 1.75rem;
+      border: 1px solid rgba(255, 193, 7, 0.16);
+      padding: 2.25rem 1.8rem 2.4rem;
+      box-shadow:
+        0 32px 80px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(0, 0, 0, 0.9);
+    }
+
+    .eyebrow {
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ffc107;
+      margin-bottom: 0.35rem;
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      margin: 0 0 0.6rem;
+    }
+
+    .intro {
+      margin: 0 0 1.6rem;
+      font-size: 0.96rem;
+      line-height: 1.55;
+      color: #d2d2d6;
+    }
+
+    .form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.2rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: #f0f0f4;
+    }
+
+    input,
+    select,
+    textarea {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(4, 4, 10, 0.86);
+      padding: 0.7rem 0.85rem;
+      font-size: 0.92rem;
+      color: #f7f7f7;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #ffc107;
+      box-shadow: 0 0 0 1px rgba(255, 193, 7, 0.4);
+    }
+
+    .submit {
+      grid-column: 1 / -1;
+      margin-top: 0.2rem;
+      padding: 0.85rem 1.4rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #ffc107, #ffda6a);
+      color: #050509;
+      font-weight: 600;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .submit:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .bottom-note {
+      font-size: 0.86rem;
+      color: #b9b9c2;
+      margin: 0;
+    }
+
+    .bottom-note a {
+      color: #ffc107;
+      text-decoration: none;
+    }
+
+    .bottom-note a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        border-radius: 1.25rem;
+        padding: 1.8rem 1.3rem 2rem;
+      }
+
+      .form {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </Layout>
