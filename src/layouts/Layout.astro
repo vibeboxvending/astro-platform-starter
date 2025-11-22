@@ -1,42 +1,55 @@
 ---
-const { title = "Vibe Box Vending | DC / MD" } = Astro.props;
+const { title } = Astro.props;
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+
     <style>
-      :root {
-        --bg: #050509;
-        --fg: #f7f7f7;
-        --accent: #ffc107;
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: radial-gradient(circle at top, #1d3557 0, #050509 55%);
-        color: var(--fg);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 1.5rem;
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #050509;
+        color: #f7f7f7;
       }
-      main {
-        max-width: 32rem;
-        width: 100%;
+
+      .wrapper {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2rem 1.2rem;
       }
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.55;
+        margin-bottom: 1rem;
+      }
+
+      .tagline {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: #ffc107;
+      }
+
+      a {
+        color: #ffc107;
+        font-weight: 600;
+      }
     </style>
   </head>
+
   <body>
-    <main>
+    <div class="wrapper">
       <slot />
-    </main>
+    </div>
   </body>
 </html>
