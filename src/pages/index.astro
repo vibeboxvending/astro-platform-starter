@@ -6,3 +6,60 @@
     Or email us directly
   </a>
 </div>
+
+
+<section id="placement-form" class="placement-section">
+  <h2>Request a VibeBox for your building</h2>
+  <p>
+    Tell us a little about your property and we’ll follow up with a custom
+    placement plan and product mix.
+  </p>
+
+  <form name="placement" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="placement" />
+
+    <label>
+      Your name
+      <input type="text" name="name" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" required />
+    </label>
+
+    <label>
+      Phone
+      <input type="tel" name="phone" />
+    </label>
+
+    <label>
+      Building name
+      <input type="text" name="building" required />
+    </label>
+
+    <label>
+      Building type
+      <select name="type">
+        <option>Apartments</option>
+        <option>Office</option>
+        <option>Mixed-use</option>
+        <option>Other</option>
+      </select>
+    </label>
+
+    <label>
+      Approx. number of residents / employees
+      <input type="number" name="size" />
+    </label>
+
+    <label>
+      Anything else we should know?
+      <textarea name="message" rows="4"></textarea>
+    </label>
+
+    <button type="submit">
+      Submit placement request
+    </button>
+  </form>
+</section>
