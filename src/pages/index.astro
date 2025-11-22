@@ -1,189 +1,452 @@
----
-import Layout from '../layouts/Layout.astro';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VibeBox Vending • DC / MD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-const title = "VibeBox Vending | DC · MD";
----
-
-<Layout title={title}>
-  <main
-    style="
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #18192c 0%, #050510 60%, #030308 100%);
+      color: #f7f7ff;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 2rem 1.5rem;
-      box-sizing: border-box;
-    "
-  >
-    <section
-      style="
-        max-width: 720px;
-        width: 100%;
-        background: radial-gradient(circle at top left,#3b3b5c,#050509);
-        border-radius: 24px;
-        padding: 1.75rem 1.5rem 2rem;
-        box-shadow: 0 18px 40px rgba(0,0,0,.7);
-        color: #f7f7f7;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-      "
-    >
-      <!-- Top row: logo + badge -->
-      <header
-        style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:1rem;
-          margin-bottom:1.5rem;
-        "
-      >
-        <div style="display:flex; align-items:center; gap:.75rem;">
-          <div
-            style="
-              width:40px;
-              height:40px;
-              border-radius:14px;
-              background:linear-gradient(135deg,#ffd978,#ffb300);
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              font-weight:800;
-              color:#111;
-              font-size:.9rem;
-            "
-          >
-            VB
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #151627 0%, #0c0c18 50%, #05050b 100%);
+      border-radius: 24px;
+      padding: 24px 20px 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-pill {
+      width: 40px;
+      height: 56px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, #ffcc3a, #dca21e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #111111;
+      font-size: 13px;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: rgba(249, 249, 255, 0.7);
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 204, 58, 0.22);
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ffcf4d;
+      background: radial-gradient(circle at top left, rgba(255, 207, 77, 0.2), transparent 60%);
+      white-space: nowrap;
+    }
+
+    /* Layout */
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr);
+      gap: 24px;
+    }
+
+    @media (min-width: 780px) {
+      .content {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      }
+      .card {
+        padding: 28px 28px 32px;
+      }
+    }
+
+    /* Left / Hero */
+    .hero-tagline {
+      font-size: 30px;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .hero-tagline span.highlight {
+      color: #ffcf4d;
+    }
+
+    .hero-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(245, 245, 255, 0.76);
+      max-width: 32rem;
+      margin-bottom: 18px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11px;
+      color: rgba(245, 245, 255, 0.78);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .chip.gold {
+      border-color: rgba(255, 204, 58, 0.4);
+      color: #ffcf4d;
+      background: rgba(255, 204, 58, 0.08);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 11px 18px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+        color 0.12s ease;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(145deg, #ffcc3a, #e1aa21);
+      color: #111111;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: transparent;
+      color: rgba(245, 245, 255, 0.9);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .meta-line {
+      font-size: 11px;
+      color: rgba(230, 230, 255, 0.6);
+      margin-top: 8px;
+    }
+
+    /* Right / Machine Card */
+    .machine-card {
+      border-radius: 20px;
+      background: radial-gradient(circle at top left, #ffcc3a 0%, #d79b1b 40%, #111111 41%);
+      padding: 18px 16px 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.75);
+    }
+
+    @media (min-width: 780px) {
+      .machine-card {
+        margin-top: 6px;
+      }
+    }
+
+    .machine-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .machine-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      color: #111111;
+    }
+
+    .machine-subtitle {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.1);
+      color: #111111;
+      font-weight: 600;
+    }
+
+    .machine-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .machine-grid {
+      border-radius: 14px;
+      background: #151623;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 18px;
+      gap: 4px;
+    }
+
+    .slot {
+      border-radius: 4px;
+      background: #24263a;
+    }
+
+    .slot.gold {
+      background: linear-gradient(145deg, #ffcc3a, #e1aa21);
+    }
+
+    .machine-mini-labels {
+      margin-top: 8px;
+      font-size: 10px;
+      color: rgba(245, 245, 255, 0.75);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .machine-mini-labels span.bold {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 9px;
+      color: rgba(245, 245, 255, 0.9);
+    }
+
+    .machine-copy {
+      font-size: 11px;
+      line-height: 1.5;
+      color: rgba(20, 20, 20, 0.9);
+    }
+
+    .machine-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .machine-pill {
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.14);
+      padding: 4px 8px;
+      font-size: 10px;
+      color: #111111;
+      font-weight: 500;
+    }
+
+    .machine-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.22);
+      color: #111111;
+      font-weight: 500;
+    }
+
+    .machine-footer span.gold {
+      color: #8a5a00;
+      font-weight: 700;
+    }
+
+    /* Small text under main card */
+    .bottom-text {
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(230, 230, 255, 0.65);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <!-- Top bar -->
+      <div class="top-bar">
+        <div class="brand">
+          <div class="brand-pill">VB</div>
+          <div class="brand-text">
+            <div class="brand-title">VIBEBOX VENDING</div>
+            <div class="brand-subtitle">Urban Vending Solutions · DC / MD</div>
           </div>
-          <div style="line-height:1.2;">
-            <div style="font-weight:700; letter-spacing:.06em; font-size:.85rem;">
-              VIBEBOX VENDING
-            </div>
-            <div style="font-size:.75rem; color:#b5b5c9;">
-              Urban Vending Solutions · DC / MD
-            </div>
+        </div>
+        <div class="badge">CASHLESS • 24/7 SUPPORT</div>
+      </div>
+
+      <!-- Main content -->
+      <div class="content">
+        <!-- Left: hero -->
+        <div>
+          <h1 class="hero-tagline">
+            Luxury <span class="highlight">vending</span> that matches your building’s energy.
+          </h1>
+          <p class="hero-body">
+            VibeBox Vending installs and manages premium, cashless vending machines tailored for modern DC &amp; MD properties.
+            Clean look, reliable service, and products your residents actually eat.
+          </p>
+
+          <div class="chips">
+            <div class="chip">Apartments</div>
+            <div class="chip">Offices</div>
+            <div class="chip">Commercial</div>
+            <div class="chip gold">No-cost placement for qualifying buildings</div>
+          </div>
+
+          <div class="actions">
+            <a href="#request" class="btn-primary">Request a VibeBox</a>
+            <a href="#portfolio" class="btn-secondary">View machine portfolio</a>
+          </div>
+
+          <div class="meta-line">
+            Snacks • Drinks • Essentials • 24/7 • Cashless tap, chip &amp; mobile payments.
           </div>
         </div>
 
-        <div
-          style="
-            padding:.45rem .9rem;
-            border-radius:999px;
-            border:1px solid rgba(255,217,120,.4);
-            font-size:.7rem;
-            text-transform:uppercase;
-            letter-spacing:.12em;
-            color:#ffd978;
-            white-space:nowrap;
-          "
-        >
-          Cashless · 24/7 Support
+        <!-- Right: machine card -->
+        <div>
+          <div class="machine-card">
+            <div class="machine-header">
+              <div>
+                <div class="machine-title">Signature Gold Series</div>
+                <div style="margin-top:4px;font-size:11px;font-weight:600;color:#111111;">
+                  DC · MD • High-rise ready
+                </div>
+              </div>
+              <div class="machine-subtitle">Black &amp; Gold Finish</div>
+            </div>
+
+            <div class="machine-layout">
+              <!-- Fake vending layout -->
+              <div>
+                <div class="machine-grid">
+                  <div class="slot"></div>
+                  <div class="slot"></div>
+                  <div class="slot gold"></div>
+                  <div class="slot"></div>
+
+                  <div class="slot gold"></div>
+                  <div class="slot"></div>
+                  <div class="slot"></div>
+                  <div class="slot"></div>
+
+                  <div class="slot"></div>
+                  <div class="slot"></div>
+                  <div class="slot"></div>
+                  <div class="slot gold"></div>
+                </div>
+                <div class="machine-mini-labels">
+                  <span class="bold">VIBEBOX • DC · MD</span>
+                  <span>Snacks · Drinks · Essentials</span>
+                  <span>Tap • Chip • Mobile payments</span>
+                </div>
+              </div>
+
+              <!-- Copy + features -->
+              <div>
+                <p class="machine-copy">
+                  High-end machines wrapped in a black-and-gold theme to match luxury lobbies and modern common areas.
+                  Designed for buildings that want vending to feel like an amenity, not an eyesore.
+                </p>
+
+                <div class="machine-badges">
+                  <div class="machine-pill">Cashless only</div>
+                  <div class="machine-pill">Remote monitoring</div>
+                  <div class="machine-pill">Curated product mix</div>
+                  <div class="machine-pill">Service included</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="machine-footer">
+              <div>Avg. building size: <span class="gold">50+ residents</span></div>
+              <div>Placement fee: <span class="gold">$0 for qualifying sites</span></div>
+            </div>
+          </div>
         </div>
-      </header>
-
-      <!-- Hero title / body -->
-      <h1
-        style="
-          font-size:1.7rem;
-          line-height:1.2;
-          margin-bottom:.75rem;
-        "
-      >
-        Luxury <span style="color:#ffcf4a;">vending</span> that matches
-        your building’s energy.
-      </h1>
-
-      <p
-        style="
-          font-size:.95rem;
-          color:#c7c7d8;
-          line-height:1.6;
-          margin-bottom:1.4rem;
-        "
-      >
-        VibeBox Vending installs and manages premium, cashless vending
-        machines tailored for modern DC &amp; MD properties. Clean look,
-        reliable service, and products your residents actually eat.
-      </p>
-
-      <!-- Tags -->
-      <div
-        style="
-          display:flex;
-          flex-wrap:wrap;
-          gap:.5rem;
-          margin-bottom:1.5rem;
-        "
-      >
-        <span
-          style="
-            border-radius:999px;
-            padding:.4rem .8rem;
-            border:1px solid rgba(255,207,74,.3);
-            font-size:.75rem;
-          "
-        >
-          Apartments · Offices · Commercial
-        </span>
-        <span
-          style="
-            border-radius:999px;
-            padding:.4rem .8rem;
-            border:1px solid rgba(255,207,74,.3);
-            font-size:.75rem;
-            color:#ffcf4a;
-          "
-        >
-          No-cost placement for qualifying buildings
-        </span>
       </div>
 
-      <!-- CTA row -->
-      <div
-        style="
-          display:flex;
-          flex-wrap:wrap;
-          gap:.75rem;
-          margin-bottom:1.1rem;
-        "
-      >
-        <!-- link to your placement form page -->
-        <a
-          href="/about"
-          style="
-            text-decoration:none;
-            background:#ffcf4a;
-            color:#111;
-            padding:.7rem 1.3rem;
-            border-radius:.9rem;
-            font-weight:600;
-            font-size:.9rem;
-          "
-        >
-          Request a VibeBox
-        </a>
-
-        <!-- link to IG or portfolio (edit href) -->
-        <a
-          href="https://instagram.com/vibebox_vending"
-          target="_blank"
-          rel="noreferrer"
-          style="
-            text-decoration:none;
-            border-radius:.9rem;
-            padding:.7rem 1.1rem;
-            border:1px solid rgba(255,255,255,.2);
-            font-size:.85rem;
-            color:#f7f7f7;
-          "
-        >
-          View machine portfolio
-        </a>
+      <div class="bottom-text">
+        Ready to place a VibeBox in your building? Use the button above to request a quick site review and placement details.
       </div>
-
-      <div style="font-size:.8rem; color:#8f8fa4;">
-        Snacks • Drinks • Essentials • 24/7 · Cashless tap, chip, mobile
-        payments.
-      </div>
-    </section>
-  </main>
-</Layout>
+    </div>
+  </div>
+</body>
+</html>
